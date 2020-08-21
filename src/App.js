@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Button from 'antd/lib/button';
-import { Input, Row, Col, List } from 'antd';
+import { Input, Row, Col, List, message } from 'antd';
 import './App.css';
 import store from './store/sotre.js'
 import { getInputChangeAction, getAddItemAction, delItemAction } from './store/actionCreators.js'
@@ -23,6 +23,11 @@ class App extends Component {
         store.dispatch(action)
     }
     handleAdd = () => {
+        let value = store.getState().inputValue
+        if(!value || value == null || value == '') {
+            message.error('录入内容不能为空！');
+            return false;
+        }
         const action = getAddItemAction()
         store.dispatch(action)
         this.refs.myInput.input.value = ''
